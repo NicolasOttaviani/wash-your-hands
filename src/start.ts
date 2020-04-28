@@ -10,10 +10,6 @@ export class Start extends Phaser.Scene {
       width: gameConfig.width,
       height: gameConfig.height,
     });
-    this.load.spritesheet("bubbles", "assets/bubble.png", {
-      frameWidth: 140,
-      frameHeight: 140,
-    });
   }
 
   create() {
@@ -35,18 +31,5 @@ export class Start extends Phaser.Scene {
     this.input.on("pointerdown", (pointer: Phaser.Geom.Point) => {
       this.scene.start("game");
     });
-
-    this.anims.create({
-      key: "explode",
-      frames: this.anims.generateFrameNumbers("bubbles", {
-        start: 0,
-        end: 8,
-        first: 0,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-    const boom = this.add.sprite(400, 300, "bubbles");
-    boom.anims.play("explode");
   }
 }
