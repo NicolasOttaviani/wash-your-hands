@@ -24,6 +24,10 @@ Little project to learn why whash your hands is great :)
 
 ### How to run it
 
-Run
+1.  Run server
 
         yarn run start
+
+1.  Open the browser
+
+        http://localhost:1234
