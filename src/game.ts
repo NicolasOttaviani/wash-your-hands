@@ -31,6 +31,7 @@ export class Game extends Phaser.Scene {
       width: gameConfig.width,
       height: gameConfig.height,
     });
+    this.load.image("bubble", "assets/bubble-alone.png");
     this.load.spritesheet("viruses", "assets/viruses.png", {
       frameWidth: 70,
       frameHeight: 70,
@@ -133,7 +134,7 @@ export class Game extends Phaser.Scene {
         );
         if (!contains) return;
         this.add
-          .image(currentPointer.x, currentPointer.y, "bubbles", 9)
+          .image(currentPointer.x, currentPointer.y, "bubble")
           .setScale(0.3);
       },
     });
