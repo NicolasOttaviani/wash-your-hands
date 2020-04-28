@@ -1,3 +1,8 @@
+export const gameConfig = {
+  width: 456,
+  height: 681,
+};
+
 export const hand = [
   195,
   814,

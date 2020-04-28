@@ -1,4 +1,8 @@
-import { hand } from "./polygons";
+import { gameConfig } from "./configs";
+import { hand } from "./configs";
+
+const MAX_VIRUS = 8;
+const VIRUS_LIFE = 4;
 const polygon = new Phaser.Geom.Polygon(hand.map((n) => n - 150) as any);
 
 function randomPoints(width: number, height: number, number: number) {
@@ -23,7 +27,10 @@ export class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.svg("hand", "assets/hand.svg", { width: 456, height: 681 });
+    this.load.svg("hand", "assets/hand.svg", {
+      width: gameConfig.width,
+      height: gameConfig.height,
+    });
     this.load.spritesheet("viruses", "assets/viruses.png", {
       frameWidth: 70,
       frameHeight: 70,
@@ -35,31 +42,100 @@ export class Game extends Phaser.Scene {
   }
 
   create() {
+    let fire = false;
+    let currentPointer: Phaser.Geom.Point;
     this.add.image(0, 0, "hand").setOrigin(0);
-    this.add.sprite(100, 100, "bubbles", 8).setOrigin(0);
 
-    this.input.on("pointermove", function (pointer: Phaser.Geom.Point) {
-      if (!Phaser.Geom.Polygon.ContainsPoint(polygon, pointer)) {
+    this.input.on("pointerdown", (pointer: Phaser.Geom.Point) => {
+      fire = true;
+      drawBubble(pointer);
+    });
+    this.input.on("pointerup", () => (fire = false));
+    this.input.on("pointermove", drawBubble);
+    this.input.on(
+      "gameobjectover",
+      (pointer: never, gameobject: Phaser.GameObjects.GameObject) => {
+        if (fire) {
+          const life = <number>gameobject.getData("life");
+          gameobject.setData("life", life - 1);
+        }
+      }
+    );
+
+    function drawBubble(pointer: Phaser.Geom.Point) {
+      if (!fire) {
         return;
       }
-      console.log("yes");
+      currentPointer = pointer;
+    }
+
+    const virusSize = randomPoints(
+      gameConfig.width,
+      gameConfig.height,
+      MAX_VIRUS
+    ).map(({ x, y }) => {
+      const scale = 0.5 + Math.floor(Math.random() * 0.5);
+      const image = this.add
+        .image(x, y, "viruses", Math.floor(Math.random() * 10))
+        .setInteractive()
+        .setScale(scale)
+        .setDataEnabled()
+        .setData("life", VIRUS_LIFE)
+        .setDepth(3);
+
+      image.on("changedata", (parent: never, key: string, life: number) => {
+        if (life === 0) {
+          image.destroy();
+          this.anims.create({
+            key: "explode",
+            frames: this.anims.generateFrameNumbers("bubbles", {
+              start: 0,
+              end: 8,
+            }),
+            frameRate: 4,
+            repeat: 1,
+          });
+          const boom = this.add
+            .sprite(x, y, "bubbles")
+            .setDepth(10)
+            .setScale(scale);
+          boom.anims.play("explode");
+          boom.anims.stopOnRepeat();
+          this.events.emit("virus-destroy");
+
+          boom.once("animationcomplete", () => boom.setDepth(0));
+        }
+      });
+    }).length;
+
+    let destroyed = 0;
+    this.events.on("virus-destroy", () => {
+      destroyed++;
+      if (destroyed >= virusSize) {
+        this.time.addEvent({
+          delay: 4000,
+          callback: () => {
+            this.events.removeListener("virus-destroy");
+            this.scene.start("start");
+          },
+        });
+      }
     });
 
-    randomPoints(456, 681, 10).forEach(({ x, y }) => {
-      this.add.image(x, y, "viruses", Math.floor(Math.random() * 10));
+    this.time.addEvent({
+      loop: true,
+      delay: 200,
+      callback: () => {
+        if (!fire || !currentPointer) return;
+        const contains = Phaser.Geom.Polygon.ContainsPoint(
+          polygon,
+          currentPointer
+        );
+        if (!contains) return;
+        this.add
+          .image(currentPointer.x, currentPointer.y, "bubbles", 9)
+          .setScale(0.3);
+      },
     });
-
-    this.anims.create({
-      key: "explode",
-      frames: this.anims.generateFrameNumbers("bubbles", {
-        start: 0,
-        end: 8,
-        first: 0,
-      }),
-      frameRate: 4,
-      repeat: -1,
-    });
-    const boom = this.add.sprite(400, 300, "bubbles");
-    boom.anims.play("explode");
   }
 }
