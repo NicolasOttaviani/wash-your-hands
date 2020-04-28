@@ -1,7 +1,20 @@
-import { build } from "./wash";
+import "phaser";
+import { Game } from "./game";
 
-window.addEventListener("DOMContentLoaded", () => {
-  const svg = document.getElementsByTagName("svg")[0];
-  console.log(svg);
-  build(svg);
-});
+const config: Phaser.Types.Core.GameConfig = {
+  type: Phaser.AUTO,
+  backgroundColor: 0xffffff,
+  scale: {
+    mode: Phaser.Scale.FIT,
+    parent: "phaser",
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 450,
+    height: 700,
+  },
+  dom: {
+    createContainer: true,
+  },
+  scene: [Game],
+};
+document.body.style.backgroundColor = "#ffffff";
+export const game = new Phaser.Game(config);

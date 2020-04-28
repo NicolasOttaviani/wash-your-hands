@@ -1,3 +1,4 @@
+/*
 const BUBBLE_REFRESH_DELAY = 100;
 
 export function build(svg: SVGSVGElement) {
@@ -64,3 +65,4 @@ function makeBubble(cx: number, cy: number, r: number) {
     mask: "url(#mask-light-bottom)",
   });
 }
+*/
