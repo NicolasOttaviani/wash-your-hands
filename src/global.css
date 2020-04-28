@@ -29,11 +29,11 @@ body {
   margin: 0 auto;
 }
 
-.virus path {
+.virus {
   transition: all 1s linear;
 }
 
-.virus.remove path {
+.virus.remove {
   scale: 0;
   transform: translate(210px, 210px);
 }

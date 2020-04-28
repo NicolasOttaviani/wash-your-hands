@@ -1,8 +1,11 @@
 const BUBBLE_REFRESH_DELAY = 100;
 
-export function build(svg: SVGSVGElement) {
-  const handPath = <SVGGeometryElement>svg.getElementsByClassName("hand")[0];
-  const bubbleGroup = <SVGGElement>svg.getElementsByClassName("bubbles")[0];
+export function build(svg) {
+  const handPath = svg.getElementsByClassName("hand")[0];
+  const bubbleGroup = svg.getElementsByClassName("bubbles")[0];
+
+  console.log("hand", handPath);
+  console.log("bubble", bubbleGroup);
 
   let currentX, currentY;
   let drawing = false;
@@ -15,11 +18,11 @@ export function build(svg: SVGSVGElement) {
     drawing = false;
   }
 
-  function drawSoapBubble(event: MouseEvent) {
+  function drawSoapBubble(event) {
     if (!drawing) return;
     currentX = event.clientX;
     currentY = event.clientY;
-    const target = event.target as HTMLElement;
+    const target = event.target;
     if (target.closest) {
       const virus = target.closest(".virus");
       if (virus) {
@@ -49,13 +52,13 @@ export function build(svg: SVGSVGElement) {
   document.addEventListener("mouseup", stopDrawSoapBubble);
 }
 
-function makeSVG(tag: string, attrs: { [key: string]: any }) {
+function makeSVG(tag, attrs) {
   const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
   for (let k in attrs) el.setAttribute(k, attrs[k]);
   return el;
 }
 
-function makeBubble(cx: number, cy: number, r: number) {
+function makeBubble(cx, cy, r) {
   return makeSVG("circle", {
     r,
     cx,
