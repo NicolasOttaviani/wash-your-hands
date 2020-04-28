@@ -1,8 +1,8 @@
 import { gameConfig } from "./configs";
 
-export class Start extends Phaser.Scene {
+export class End extends Phaser.Scene {
   constructor() {
-    super("start");
+    super("end");
   }
 
   preload() {
@@ -16,16 +16,11 @@ export class Start extends Phaser.Scene {
     this.add.image(0, 0, "hand").setOrigin(0);
 
     this.add
-      .text(
-        gameConfig.width / 2 - 140,
-        gameConfig.height / 2,
-        "Click to start",
-        {
-          fontFamily: "Arial",
-          fontSize: 32,
-          color: "#444444",
-        }
-      )
+      .text(0, gameConfig.height / 2, "Bravo tes mains sont toutes propres !", {
+        fontFamily: "Arial",
+        fontSize: 28,
+        color: "#444444",
+      })
       .setOrigin(0);
 
     this.input.on("pointerdown", () => {

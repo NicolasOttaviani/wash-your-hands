@@ -117,7 +117,7 @@ export class Game extends Phaser.Scene {
           delay: 4000,
           callback: () => {
             this.events.removeListener("virus-destroy");
-            this.scene.start("start");
+            this.scene.start("end");
           },
         });
       }
