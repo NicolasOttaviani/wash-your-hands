@@ -91,7 +91,7 @@ export class Game extends Phaser.Scene {
             key: "explode",
             frames: this.anims.generateFrameNumbers("bubbles", {
               start: 0,
-              end: 8,
+              end: 9,
             }),
             frameRate: 4,
             repeat: 1,
