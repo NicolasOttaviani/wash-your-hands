@@ -1,11 +1,9 @@
+/*
 const BUBBLE_REFRESH_DELAY = 100;
 
-export function build(svg) {
-  const handPath = svg.getElementsByClassName("hand")[0];
+export function build(svg: SVGSVGElement) {
+  const handPath = <SVGGeometryElement>svg.getElementsByClassName("hand")[0];
   const bubbleGroup = svg.getElementsByClassName("bubbles")[0];
-
-  console.log("hand", handPath);
-  console.log("bubble", bubbleGroup);
 
   let currentX, currentY;
   let drawing = false;
@@ -52,13 +50,13 @@ export function build(svg) {
   document.addEventListener("mouseup", stopDrawSoapBubble);
 }
 
-function makeSVG(tag, attrs) {
+function makeSVG(tag: string, attrs: { [key: string]: any }) {
   const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
   for (let k in attrs) el.setAttribute(k, attrs[k]);
   return el;
 }
 
-function makeBubble(cx, cy, r) {
+function makeBubble(cx: number, cy: number, r: number) {
   return makeSVG("circle", {
     r,
     cx,
@@ -67,3 +65,4 @@ function makeBubble(cx, cy, r) {
     mask: "url(#mask-light-bottom)",
   });
 }
+*/
