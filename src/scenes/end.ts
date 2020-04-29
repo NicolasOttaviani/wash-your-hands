@@ -13,7 +13,7 @@ export class End extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.scale.width / 2, this.scale.height / 2, "hand");
+    this.add.image(this.scale.width / 2, this.scale.height / 2 - 60, "hand");
     addFailingWater(this);
     this.events.once("hand-washed", () => {
       this.add

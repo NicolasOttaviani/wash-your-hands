@@ -1,10 +1,13 @@
+const maxY = 1100;
+const minY = -80;
+
 export function addRisingWater(scene: Phaser.Scene) {
-  const water = scene.add.image(0, 700, "water").setOrigin(0);
+  const water = scene.add.image(0, maxY, "water").setOrigin(0);
   scene.tweens.add({
     targets: water,
     props: {
       y: {
-        value: -70,
+        value: minY,
         duration: 3500,
         ease: "Power1",
       },
@@ -23,12 +26,12 @@ export function addRisingWater(scene: Phaser.Scene) {
 }
 
 export function addFailingWater(scene: Phaser.Scene) {
-  const water = scene.add.image(0, -68, "water").setOrigin(0);
+  const water = scene.add.image(0, minY, "water").setOrigin(0);
   scene.tweens.add({
     targets: water,
     props: {
       y: {
-        value: 700,
+        value: maxY,
         duration: 2000,
         ease: "Power1",
       },

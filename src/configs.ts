@@ -671,5 +671,5 @@ const handPoints = [
 ];
 
 export const hand = new Phaser.Geom.Polygon(
-  handPoints.map((n, i) => n - (i % 2 ? 150 : 53)) as any
+  handPoints.map((n, i) => n - (i % 2 ? 60 : 52)) as any
 );
