@@ -1,7 +1,7 @@
 import "phaser";
-import { Game } from "./game";
-import { Start } from "./start";
-import { End } from "./end";
+import { Game } from "./scenes/game";
+import { Start } from "./scenes/start";
+import { End } from "./scenes/end";
 
 import { gameConfig } from "./configs";
 
@@ -12,7 +12,7 @@ const config: Phaser.Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     parent: "phaser",
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: gameConfig.width,
+    width: gameConfig.width + 200,
     height: gameConfig.height,
   },
   dom: {
