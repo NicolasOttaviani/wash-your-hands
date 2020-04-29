@@ -3,7 +3,7 @@ export const gameConfig = {
   height: 681,
 };
 
-export const hand = [
+const handPoints = [
   195,
   814,
   196,
@@ -669,3 +669,7 @@ export const hand = [
   195,
   814,
 ];
+
+export const hand = new Phaser.Geom.Polygon(
+  handPoints.map((n, i) => n - (i % 2 ? 150 : 53)) as any
+);
