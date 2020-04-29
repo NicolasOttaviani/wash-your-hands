@@ -13,7 +13,7 @@ export class Start extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.scale.width / 2, this.scale.height / 2, "hand");
+    this.add.image(this.scale.width / 2, this.scale.height / 2 - 60, "hand");
 
     this.add
       .text(100, gameConfig.height / 2, "Clique pour commencer", {

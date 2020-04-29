@@ -1,4 +1,4 @@
-import { gameConfig } from "../configs";
+import { gameConfig, hand } from "../configs";
 import { addViruses } from "../lib/virus";
 import { addSoap } from "../lib/soap";
 import { addRisingWater } from "../lib/water";
@@ -25,7 +25,7 @@ export class Game extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(this.scale.width / 2, this.scale.height / 2, "hand");
+    this.add.image(this.scale.width / 2, this.scale.height / 2 - 60, "hand");
     addViruses(this, {
       life: 4,
       max: 12,
@@ -50,11 +50,10 @@ export class Game extends Phaser.Scene {
     this.events.once("hand-washed", () => {
       this.scene.start("end");
     });
-
     /*
     const graphics = this.add.graphics();
     graphics.fillStyle(0x000000);
-    graphics.fillPoints(polygon.points, true);
+    graphics.fillPoints(hand.points, true);
     */
   }
 }
