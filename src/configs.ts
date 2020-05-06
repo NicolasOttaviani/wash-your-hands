@@ -1,6 +1,6 @@
 export const gameConfig = {
-  width: 456,
-  height: 681,
+  width: 992,
+  height: 709,
 };
 
 const handPoints = [

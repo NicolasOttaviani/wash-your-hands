@@ -6,7 +6,7 @@ export class End extends Phaser.Scene {
   }
 
   preload() {
-    this.load.svg("hand", "assets/hand.svg", {
+    this.load.svg("hand", "assets/hands.svg", {
       width: gameConfig.width,
       height: gameConfig.height,
     });

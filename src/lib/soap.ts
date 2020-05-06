@@ -3,14 +3,16 @@ import { hand } from "../configs";
 export function addSoap(scene: Phaser.Scene) {
   let fire = false;
   let currentPointer: Phaser.Geom.Point;
-
+  const soap = scene.add
+    .image(scene.input.pointer1.x, scene.input.pointer1.y, "soap")
+    .setScale(0.1);
   scene.input.on("pointerdown", (pointer: Phaser.Geom.Point) => {
     fire = true;
-    drawBubble(pointer);
+    updateBubble(pointer);
   });
   scene.events.once("viruses-destroyed", () => (fire = false));
   scene.input.on("pointerup", () => (fire = false));
-  scene.input.on("pointermove", drawBubble);
+  scene.input.on("pointermove", updateBubble);
   scene.input.on(
     "gameobjectover",
     (pointer: never, gameobject: Phaser.GameObjects.GameObject) => {
@@ -20,7 +22,8 @@ export function addSoap(scene: Phaser.Scene) {
       }
     }
   );
-  function drawBubble(pointer: Phaser.Geom.Point) {
+  function updateBubble(pointer: Phaser.Geom.Point) {
+    soap.setPosition(pointer.x, pointer.y);
     if (!fire) {
       return;
     }
@@ -52,4 +55,10 @@ export function addSoap(scene: Phaser.Scene) {
       });
     },
   });
+
+  return {
+    removeSoap() {
+      soap.destroy();
+    },
+  };
 }

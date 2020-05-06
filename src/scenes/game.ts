@@ -8,7 +8,11 @@ export class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.svg("hand", "assets/hand.svg", {
+    this.load.svg("hand", "assets/hands.svg", {
+      width: gameConfig.width,
+      height: gameConfig.height,
+    });
+    this.load.svg("soap", "assets/soap.svg", {
       width: gameConfig.width,
       height: gameConfig.height,
     });
@@ -25,16 +29,19 @@ export class Game extends Phaser.Scene {
   }
 
   create() {
+    this.game.canvas.style.cursor = "none";
     this.add.image(this.scale.width / 2, this.scale.height / 2 - 60, "hand");
     addViruses(this, {
       life: 4,
       max: 12,
       frameRate: 4,
     });
-    addSoap(this);
+    const { removeSoap } = addSoap(this);
 
     this.events.once("viruses-destroyed", () => {
       this.input.removeAllListeners();
+      removeSoap();
+      this.game.canvas.style.cursor = "default";
       this.add
         .text(100, gameConfig.height / 2, "Clique pour te rincer les mains", {
           fontFamily: "Arial",
